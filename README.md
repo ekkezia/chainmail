@@ -1,6 +1,17 @@
-# Getting Started with Create React App
+# Chainmail
+`chainmail` is a fashion editorial presented in the form of Instagram Story user interface. 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is exploring the idea that the audience should submit an effort in order to view the image. This makes the photography experience transactional-based instead of just one-way interaction where the photographer traditionally serves the image to the audience and they passively consume it. 
+
+Each shot in the editorial will be revealed as a user submitted their social media handle, therefore, the number of the images that can be viewed publicly is depended on the number of the people that have participated in the social media collection form. The app is roughly following Instagram Story UI, and users can navigate from one story to another by clicking the next button. When a user reaches the latest revealed image, they will be prompted with a dialog that requests their social media handle to unlock the next shot. The participating users’ social media handles are listed in the top drawer menu, while the description of the image is displayed in the bottom drawer.
+
+## Frameworks & Libraries Used
+1. React.js
+2. Material UI
+3. Formik
+4. prop-types
+5. styled-components
+6. Supabase
 
 ## Available Scripts
 
