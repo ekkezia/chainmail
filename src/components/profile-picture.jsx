@@ -1,11 +1,11 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const Container = styled.div`
   display: flex;
   gap: 8px;
   position: absolute;
-  top: 16px;
+  top: 24px;
   left: 8px;
   cursor: pointer;
   align-items: center;
@@ -23,25 +23,27 @@ const ImageContainer = styled.div`
   background: blue;
 `;
 
+const Title = styled.p``;
+
 function Profile() {
-  const imageSource = "/images/ek-profile.png";
+  const imageSource = '/images/ek-profile.png';
 
   return (
-    <a href="https://instagram.com/ekezia" target="_blank" rel="noreferrer">
+    <a href='https://instagram.com/ekezia' target='_blank' rel='noreferrer'>
       <Container>
         <ImageContainer>
           <img
             src={imageSource}
-            alt="ig-profile-picture"
+            alt='ig-profile-picture'
             width={48}
             height={48}
             style={{
-              borderRadius: "50%",
-              cursor: "pointer",
+              borderRadius: '50%',
+              cursor: 'pointer',
             }}
           />
         </ImageContainer>
-        ekezia
+        <Title>ekezia</Title>
       </Container>
     </a>
   );

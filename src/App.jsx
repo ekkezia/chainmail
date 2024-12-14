@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import Profile from "./components/profile-picture";
-import StoryBars from "./components/story-bars";
-import Story from "./components/story";
-import ShareStoryForm from "./components/share-story-form";
-import { STORY_WIDTH } from "./shared";
-import LeaderBoard from "./components/leaderboard";
-import DescriptionBoard from "./components/description-board";
-import { CircularProgress } from "@mui/material";
-import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import Profile from './components/profile-picture';
+import StoryBars from './components/story-bars';
+import Story from './components/story';
+import ShareStoryForm from './components/share-story-form';
+import { STORY_WIDTH } from './shared';
+import LeaderBoard from './components/leaderboard';
+import DescriptionBoard from './components/description-board';
+import { CircularProgress } from '@mui/material';
+import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import { getSubmission } from './actions/get-submissions';
 import { subscribeSubmission } from './actions/subscribe-submissions';
 
@@ -77,6 +77,32 @@ const LoadingContainer = styled.div`
   justify-content: center;
 `;
 
+const StyledChevronLeft = styled(ChevronLeft)`
+  color: black;
+  background: grey;
+  border-radius: 999px;
+  margin-right: 8px;
+  cursor: pointer;
+  width: 8px;
+  height: 8px;
+  &:hover {
+    background: white;
+  }
+`;
+
+const StyledChevronRight = styled(ChevronRight)`
+  color: black;
+  background: grey;
+  border-radius: 999px;
+  margin-left: 8px;
+  cursor: pointer;
+  width: 8px;
+  height: 8px;
+  &:hover {
+    background: white;
+  }
+`;
+
 const TOTAL_IMAGES = 64;
 
 function Page() {
@@ -89,7 +115,7 @@ function Page() {
   const [isiPhone, setIsiPhone] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       setIsiPhone(/iPhone/i.test(window.navigator.userAgent));
     }
   }, []);
@@ -99,10 +125,10 @@ function Page() {
     try {
       const res = await getSubmission();
       setUsers(res);
-      console.log("res", res);
+      console.log('res', res);
       setFetchLoading(false);
     } catch {
-      console.log("error");
+      console.log('error');
     }
   }
 
@@ -141,27 +167,24 @@ function Page() {
 
   return (
     <Center>
+      <StyledChevronLeft onClick={handlePreviousImage} />
       <Container
-        className="story"
-        style={{ transform: isiPhone && "translateY(-8%)" }}
+        className='story'
+        style={{ transform: isiPhone && 'translateY(-8%)' }}
       >
         <PseudoContainer
-          style={{ borderRadius: "16px 0px 16px 0px" }}
+          style={{ borderRadius: '16px 0px 16px 0px' }}
           onClick={handlePreviousImage}
-        >
-          <ChevronLeft />
-        </PseudoContainer>
+        />
         <PseudoContainer
-          style={{ borderRadius: "0px 16px 0px 16px" }}
+          style={{ borderRadius: '0px 16px 0px 16px' }}
           onClick={handleNextImage}
-        >
-          <ChevronRight />
-        </PseudoContainer>
+        />
         <Profile />
         <StoryBars numberOfBars={TOTAL_IMAGES} imageNo={imageNo} />
         {fetchLoading && users?.length > 0 ? (
           <LoadingContainer>
-            <CircularProgress />{" "}
+            <CircularProgress style={{ color: 'white' }} />
           </LoadingContainer>
         ) : (
           [...Array(users?.length)].map((_, idx) => {
@@ -173,6 +196,8 @@ function Page() {
           })
         )}
       </Container>
+      <StyledChevronRight onClick={handleNextImage} />
+
       <ShareStoryForm
         open={open}
         onClose={() => setOpen(false)}

@@ -6,79 +6,90 @@ import { postSubmission } from '../actions/post-submission';
 import { CircularProgress, Dialog } from '@mui/material';
 import { CheckCircleOutline, Close, CopyAll } from '@mui/icons-material';
 
+const TitleContainer = styled.div`
+  display: flex;
+  gap: 8px;
+`;
+
 const Title = styled.div`
   font-family: Arial;
   font-size: 16px;
-  color: black;
-  padding: 8px;
+  color: #2b2b2b;
+  width: 100%;
 `;
 
 const UsernameInput = styled.input`
-  width: 100%;
+  width: fit-content;
   font-family: Arial;
   font-size: 16px;
-  background: none;
+  background: #efefef;
+  border: none;
+  border-radius: 3px;
   padding: 8px;
-  border-bottom: 1px solid grey;
+  margin: 8px 0;
+  width: calc(100% - 16px);
   &:hover {
-    background: none;
     border: none;
   }
 `;
 
 const CloseButton = styled.button`
-    display: flex;
-    position: absolute;
-    top: 0; 
-    right: 0;
-    background: none;
-    color: black;
-    border: none;
-    &:hover {
-      background: black;
-      color: white;
-    }
+  background: #c7c7c7;
+  color: white;
+  border: none;
+  border-radius: 999px;
+  min-width: 16px;
+  width: 16px;
+  height: 16px;
+  padding: 0;
 `;
 
 const SubmitButton = styled.button`
-width: 100%;
-height: 100%;
-font-size: 16px;
-    display: inline;
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  display: inline;
   font-family: Arial;
   background: none;
-  color: black;
+  color: #ebebeb;
   padding: 8px;
   border: none;
+  background: #efefef;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
+  border-radius: 3px;
   &:hover {
-    background: black;
+    background: #ebebeb;
     color: white;
   }
   &:disabled {
-    background: grey;
-    color: #d9d9d9;
+    color: #c7c7c7;
     cursor: not-allowed;
+    &:hover {
+      background: #efefef;
+      color: #c7c7c7;
+    }
   }
 `;
 
 const ShareButton = styled.button`
-width: 100%;
-height: fit-content;
-display: flex;
-align-items: center;
-justify-content: center;
-border-radius: 8px;
-border: 1px solid grey;
-font-size: 16px;
-font-weight: 700;
-gap: 4px;
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid grey;
+  font-size: 16px;
+  font-weight: 700;
+  gap: 4px;
   font-family: Arial;
-  background: none;
-  color: black;
+  background: #efefef;
+  color: #ebebeb;
   padding: 8px;
   cursor: pointer;
   &:hover {
-    background: black;
+    background: #ebebeb;
     color: white;
   }
   &:disabled {
@@ -88,12 +99,13 @@ gap: 4px;
   }
 `;
 
-
-
 function ShareStoryForm(props) {
   const { onClose, open, loading, setLoading, refreshOnSubmit } = props;
 
-  const userAlreadySubmitted = typeof window !== "undefined" ? localStorage.getItem('username_is_submitted') : false;
+  const userAlreadySubmitted =
+    typeof window !== 'undefined'
+      ? localStorage.getItem('username_is_submitted')
+      : false;
 
   const [copied, setCopied] = React.useState(false);
   const textToCopy = 'https://e-kezia.com/chainmail';
@@ -106,44 +118,65 @@ function ShareStoryForm(props) {
   }
 
   function handleSubmit(username) {
-    submitUser(username)
-      .then(() => refreshOnSubmit());
+    submitUser(username).then(() => refreshOnSubmit());
   }
 
   const handleCopyButton = () => {
     // const instagramUrl = 'https://www.instagram.com/add/story/?url=' + encodeURIComponent('https://e-kezia.com/chain-mail');
     // window.open(instagramUrl, '_blank');
-    navigator.clipboard.writeText(textToCopy)
+    navigator.clipboard
+      .writeText(textToCopy)
       .then(() => {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Failed to copy text: ', error);
       });
-
   };
 
   return (
-    <Dialog onClose={onClose} open={open}>
-      <div container padding={{ xs: 1 }} style={{ width: '100%', height: '100%', background: 'rgba(100, 100, 100, 0.2)', backdropFilter: 'blur(4px)', padding: 16 }}>
+    <Dialog
+      onClose={onClose}
+      open={open}
+      style={{ background: 'rgba(100, 100, 100, 0.2)' }}
+    >
+      <div
+        style={{
+          width: 'fit-content',
+          height: '100%',
+          backdropFilter: 'blur(4px)',
+          padding: '16px',
+          maxWidth: 300,
+        }}
+      >
+        <TitleContainer>
+          <Title>
+            {userAlreadySubmitted
+              ? 'You have already submitted once. Maybe share to your friends to see the next photograph?'
+              : 'Share your Instagram Username to see the next photograph'}
+          </Title>
+          <CloseButton onClick={onClose}>
+            <Close style={{ width: '12px', height: '12px' }} />
+          </CloseButton>
+        </TitleContainer>
         <div>
-          {userAlreadySubmitted ?
-            <>
-              <Title>You have already submitted once. Maybe share to your friends to see the next photograph?</Title>
-            </>
-            : <Title>Share Your Instagram User to see the next photograph</Title>}
-        </div>
-        <div>
-          <CloseButton onClick={onClose}><Close /></CloseButton>
-        </div>
-        <div>
-          {userAlreadySubmitted ?
-            <ShareButton onClick={handleCopyButton}>{copied ? <>Link copied, now go share! <CheckCircleOutline /></> : <>Copy Chainmail Link <CopyAll /></>}</ShareButton>
-            :
+          {userAlreadySubmitted ? (
+            <ShareButton onClick={handleCopyButton}>
+              {copied ? (
+                <>
+                  Link copied, now go share! <CheckCircleOutline />
+                </>
+              ) : (
+                <>
+                  🔗 Copy Chainmail Link <CopyAll />
+                </>
+              )}
+            </ShareButton>
+          ) : (
             <Formik
               initialValues={{ username: '' }}
-              validate={values => {
+              validate={(values) => {
                 const errors = {};
                 if (!values.username) {
                   errors.username = 'Required';
@@ -152,37 +185,49 @@ function ShareStoryForm(props) {
               }}
               onSubmit={(values, { setSubmitting }) => {
                 console.log(values.username);
-                let formattedUsername =
-                  values.username.includes('@') ? values.username.split('@')[1] : values.username
-                  ;
+                let formattedUsername = values.username.includes('@')
+                  ? values.username.split('@')[1]
+                  : values.username;
                 handleSubmit(formattedUsername);
               }}
             >
-              {({ isSubmitting }) => (
+              {({ isSubmitting, isValid, dirty }) => (
                 <Form>
-                  <Field name="username">
+                  <Field name='username'>
                     {({
                       field, // { name, value, onChange, onBlur }
                       form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                       meta,
                     }) => (
-                      <div container>
-                        <div item xs={9}>
-                          <UsernameInput type="text" placeholder="@ekezia" {...field} />
-                        </div>
-                        <div item xs={3}>
-                          <SubmitButton type="submit" disabled={!errors || isSubmitting}>
-                            {loading ? <CircularProgress size="16" /> : 'Submit'}
-                          </SubmitButton>
-                        </div>
-                      </div>
+                      <>
+                        <UsernameInput
+                          type='text'
+                          placeholder='@ekezia'
+                          {...field}
+                          required
+                        />
+                        <SubmitButton
+                          type='submit'
+                          disabled={
+                            !errors || isSubmitting || !isValid || !dirty
+                          }
+                        >
+                          {loading ? (
+                            <CircularProgress
+                              size='16'
+                              style={{ color: 'white' }}
+                            />
+                          ) : (
+                            'SUBMIT'
+                          )}
+                        </SubmitButton>
+                      </>
                     )}
                   </Field>
                 </Form>
               )}
             </Formik>
-
-          }
+          )}
         </div>
       </div>
     </Dialog>
