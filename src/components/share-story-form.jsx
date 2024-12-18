@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Formik, Form, Field } from 'formik';
 import { postSubmission } from '../actions/post-submission';
 import { CircularProgress, Dialog } from '@mui/material';
-import { CheckCircleOutline, Close, CopyAll } from '@mui/icons-material';
+import { Check, CheckCircleOutline, Close, CopyAll } from '@mui/icons-material';
 
 const TitleContainer = styled.div`
   display: flex;
@@ -16,6 +16,7 @@ const Title = styled.div`
   font-size: 16px;
   color: #2b2b2b;
   width: 100%;
+  margin-bottom: 8px;
 `;
 
 const UsernameInput = styled.input`
@@ -85,12 +86,12 @@ const ShareButton = styled.button`
   gap: 4px;
   font-family: Arial;
   background: #efefef;
-  color: #ebebeb;
+  color: #2b2b2b;
   padding: 8px;
   cursor: pointer;
   &:hover {
     background: #ebebeb;
-    color: white;
+    color: #2b2b2b;
   }
   &:disabled {
     background: grey;
@@ -165,11 +166,11 @@ function ShareStoryForm(props) {
             <ShareButton onClick={handleCopyButton}>
               {copied ? (
                 <>
-                  Link copied, now go share! <CheckCircleOutline />
+                  <Check /> Link copied, now go share!
                 </>
               ) : (
                 <>
-                  🔗 Copy Chainmail Link <CopyAll />
+                  <CopyAll /> Copy Chainmail Link
                 </>
               )}
             </ShareButton>
