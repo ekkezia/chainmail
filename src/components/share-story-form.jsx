@@ -80,7 +80,7 @@ const ShareButton = styled.button`
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  border: 1px solid grey;
+  border: none;
   font-size: 16px;
   font-weight: 700;
   gap: 4px;
