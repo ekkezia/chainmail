@@ -9,7 +9,7 @@ const Container = styled.div`
   position: absolute;
   top: 16px;
   left: 8px;
-  z-index: 99;
+  z-index: 1;
 `;
 const Bar = styled.div`
   width: ${(p) =>
